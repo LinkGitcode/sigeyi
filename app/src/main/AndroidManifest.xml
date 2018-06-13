@@ -16,6 +16,16 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".dfu.DfuActivity"
+            android:icon="@mipmap/ic_dfu_feature"
+            android:label="@string/dfu_feature_title" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="no.nordicsemi.android.nrftoolbox.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
