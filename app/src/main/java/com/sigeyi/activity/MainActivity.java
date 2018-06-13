@@ -1,7 +1,9 @@
-package com.sigeyi;
+package com.sigeyi.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.sigeyi.R;
 
 public class MainActivity extends AppCompatActivity {
 
