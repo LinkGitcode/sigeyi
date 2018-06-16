@@ -27,7 +27,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import no.nordicsemi.android.nrftoolbox.R;
+import com.sigeyi.R;
 
 public class SettingsActivity extends AppCompatActivity {
 

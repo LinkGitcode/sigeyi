@@ -28,6 +28,8 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 
+import com.sigeyi.R;
+
 public class AppHelpFragment extends DialogFragment {
 	private static final String ARG_TEXT = "ARG_TEXT";
 	private static final String ARG_VERSION = "ARG_VERSION";

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.sigeyi">
+    package="com.sigeyi">
 
     <application
         android:allowBackup="true"
@@ -11,19 +11,90 @@
         android:theme="@style/AppTheme">
         <activity android:name=".activity.MainActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
         <activity
             android:name=".dfu.DfuActivity"
             android:icon="@mipmap/ic_dfu_feature"
-            android:label="@string/dfu_feature_title" >
+            android:label="@string/dfu_feature_title">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="no.nordicsemi.android.nrftoolbox.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".dfu.settings.SettingsActivity"
+            android:label="@string/dfu_settings_title" />
+        <activity
+            android:name=".dfu.NotificationActivity"
+            android:label="@string/dfu_feature_title" />
+
+        <activity
+            android:name="activity.SplashscreenActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.Fullscreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+
+            <intent-filter>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data android:mimeType="application/vnd.no.nordicsemi.type.app" />
+                <data android:mimeType="application/vnd.no.nordicsemi.type.address" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".csc.CSCActivity"
+            android:icon="@mipmap/ic_csc_feature"
+            android:label="@string/csc_feature_title"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="no.nordicsemi.android.nrftoolbox.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".csc.settings.SettingsActivity"
+            android:label="@string/csc_settings_title" />
+
+        <service
+            android:name="dfu.DfuService"
+            android:exported="true"
+            android:label="@string/dfu_service_title">
+            <intent-filter>
+                <action android:name="no.nordicsemi.android.action.DFU_UPLOAD" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name="csc.CSCService"
+            android:label="@string/csc_feature_title" />
+
+        <activity
+            android:name="dfu.DfuInitiatorActivity"
+            android:label="@string/dfu_service_title"
+            android:noHistory="true"
+            android:theme="@style/AppTheme.Translucent">
+            <intent-filter>
+                <action android:name="no.nordicsemi.android.action.DFU_UPLOAD" />
+
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
     </application>

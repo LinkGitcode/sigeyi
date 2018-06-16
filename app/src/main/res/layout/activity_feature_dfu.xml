@@ -31,14 +31,14 @@
 		android:id="@+id/toolbar_actionbar"
 		layout="@layout/toolbar"/>
 
-	<no.nordicsemi.android.nrftoolbox.widget.ForegroundRelativeLayout
+	<com.sigeyi.widget.ForegroundRelativeLayout
 		style="@style/HeaderShadow"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent">
 
 		<!-- The size of text below must be fixed, therefore dp are used instead of sp -->
 
-		<no.nordicsemi.android.nrftoolbox.widget.TrebuchetBoldTextView
+		<com.sigeyi.widget.TrebuchetBoldTextView
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_centerVertical="true"
@@ -79,7 +79,7 @@
 			android:layout_alignParentBottom="true"
 			android:layout_centerHorizontal="true"
 			android:layout_marginBottom="6dp"
-			android:src="@drawable/background_title"/>
+			android:src="@mipmap/background_title"/>
 
 		<LinearLayout
 			android:layout_width="match_parent"
@@ -100,7 +100,7 @@
 				android:layout_marginTop="@dimen/feature_vertical_margin_top"
 				android:orientation="vertical">
 
-				<no.nordicsemi.android.nrftoolbox.widget.TrebuchetBoldTextView
+				<com.sigeyi.widget.TrebuchetBoldTextView
 					style="@style/Widget.ListTitle"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
@@ -120,7 +120,7 @@
 							android:layout_height="wrap_content"
 							android:text="@string/dfu_file_name_label"/>
 
-						<no.nordicsemi.android.nrftoolbox.widget.TrebuchetBoldTextView
+						<com.sigeyi.widget.TrebuchetBoldTextView
 							android:id="@+id/file_name"
 							android:layout_width="0dp"
 							android:layout_height="wrap_content"
@@ -140,7 +140,7 @@
 							android:layout_height="wrap_content"
 							android:text="@string/dfu_file_type_label"/>
 
-						<no.nordicsemi.android.nrftoolbox.widget.TrebuchetBoldTextView
+						<com.sigeyi.widget.TrebuchetBoldTextView
 							android:id="@+id/file_type"
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
@@ -157,7 +157,7 @@
 							android:layout_height="wrap_content"
 							android:text="@string/dfu_file_scope_label"/>
 
-						<no.nordicsemi.android.nrftoolbox.widget.TrebuchetBoldTextView
+						<com.sigeyi.widget.TrebuchetBoldTextView
 							android:id="@+id/file_scope"
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
@@ -174,7 +174,7 @@
 							android:layout_height="wrap_content"
 							android:text="@string/dfu_file_size_label"/>
 
-						<no.nordicsemi.android.nrftoolbox.widget.TrebuchetBoldTextView
+						<com.sigeyi.widget.TrebuchetBoldTextView
 							android:id="@+id/file_size"
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
@@ -191,7 +191,7 @@
 							android:layout_height="wrap_content"
 							android:text="@string/dfu_file_status_label"/>
 
-						<no.nordicsemi.android.nrftoolbox.widget.TrebuchetBoldTextView
+						<com.sigeyi.widget.TrebuchetBoldTextView
 							android:id="@+id/file_status"
 							android:layout_width="wrap_content"
 							android:layout_height="wrap_content"
@@ -222,7 +222,7 @@
 						android:layout_height="wrap_content"
 						android:layout_marginLeft="10dp"
 						android:onClick="onSelectFileHelpClicked"
-						android:src="@drawable/ic_help"/>
+						android:src="@mipmap/ic_help"/>
 				</LinearLayout>
 			</LinearLayout>
 
@@ -239,7 +239,7 @@
 				android:layout_marginTop="15dp"
 				android:orientation="vertical">
 
-				<no.nordicsemi.android.nrftoolbox.widget.TrebuchetBoldTextView
+				<com.sigeyi.widget.TrebuchetBoldTextView
 					style="@style/Widget.ListTitle"
 					android:layout_width="match_parent"
 					android:layout_height="wrap_content"
@@ -254,7 +254,7 @@
 					android:onClick="onUploadClicked"
 					android:text="@string/dfu_action_upload"/>
 
-				<no.nordicsemi.android.nrftoolbox.widget.TrebuchetTextView
+				<com.sigeyi.widget.TrebuchetTextView
 					android:id="@+id/textviewUploading"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
@@ -271,7 +271,7 @@
 					android:max="100"
 					android:visibility="invisible"/>
 
-				<no.nordicsemi.android.nrftoolbox.widget.TrebuchetTextView
+				<com.sigeyi.widget.TrebuchetTextView
 					android:id="@+id/textviewProgress"
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
@@ -291,5 +291,5 @@
 		</LinearLayout>
 
 
-	</no.nordicsemi.android.nrftoolbox.widget.ForegroundRelativeLayout>
+	</com.sigeyi.widget.ForegroundRelativeLayout>
 </LinearLayout>

@@ -29,7 +29,7 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 
-import no.nordicsemi.android.nrftoolbox.R;
+import com.sigeyi.R;
 
 public class ZipInfoFragment extends DialogFragment {
 

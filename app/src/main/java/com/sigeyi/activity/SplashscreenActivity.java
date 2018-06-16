@@ -30,6 +30,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
 
+import com.sigeyi.R;
+
 public class SplashscreenActivity extends Activity {
 	/** Splash screen duration time in milliseconds */
 	private static final int DELAY = 1000;
@@ -41,33 +43,8 @@ public class SplashscreenActivity extends Activity {
 
 		// Jump to SensorsActivity after DELAY milliseconds 
 		new Handler().postDelayed(() -> {
-			final Intent newIntent = new Intent(SplashscreenActivity.this, FeaturesActivity.class);
+			final Intent newIntent = new Intent(SplashscreenActivity.this, MainActivity.class);
 			newIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-
-			// Handle NFC message, if app was opened using NFC AAR record
-			final Intent intent = getIntent();
-			if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(intent.getAction())) {
-				final Parcelable[] rawMsgs = intent.getParcelableArrayExtra(NfcAdapter.EXTRA_NDEF_MESSAGES);
-				if (rawMsgs != null) {
-					for (Parcelable rawMsg : rawMsgs) {
-						final NdefMessage msg = (NdefMessage) rawMsg;
-						final NdefRecord[] records = msg.getRecords();
-
-						for (NdefRecord record : records) {
-							if (record.getTnf() == NdefRecord.TNF_MIME_MEDIA) {
-								switch (record.toMimeType()) {
-									case FeaturesActivity.EXTRA_APP:
-										newIntent.putExtra(FeaturesActivity.EXTRA_APP, new String(record.getPayload()));
-										break;
-									case FeaturesActivity.EXTRA_ADDRESS:
-										newIntent.putExtra(FeaturesActivity.EXTRA_ADDRESS, invertEndianness(record.getPayload()));
-										break;
-								}
-							}
-						}
-					}
-				}
-			}
 			startActivity(newIntent);
 			finish();
 		}, DELAY);

@@ -29,8 +29,9 @@ import android.preference.PreferenceScreen;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 
+import com.sigeyi.R;
+
 import no.nordicsemi.android.dfu.DfuSettingsConstants;
-import no.nordicsemi.android.nrftoolbox.R;
 
 public class SettingsFragment extends PreferenceFragment implements DfuSettingsConstants, SharedPreferences.OnSharedPreferenceChangeListener {
 	public static final String SETTINGS_KEEP_BOND = "settings_keep_bond";

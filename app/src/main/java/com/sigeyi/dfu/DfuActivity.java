@@ -60,22 +60,24 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sigeyi.R;
+import com.sigeyi.activity.AppHelpFragment;
+import com.sigeyi.activity.PermissionRationaleFragment;
+import com.sigeyi.dfu.adapter.FileBrowserAppsAdapter;
+import com.sigeyi.dfu.fragment.UploadCancelFragment;
+import com.sigeyi.dfu.fragment.ZipInfoFragment;
+import com.sigeyi.dfu.settings.SettingsActivity;
+import com.sigeyi.dfu.settings.SettingsFragment;
+import com.sigeyi.scanner.ScannerFragment;
+import com.sigeyi.utility.FileHelper;
+
 import java.io.File;
 
 import no.nordicsemi.android.dfu.DfuProgressListener;
 import no.nordicsemi.android.dfu.DfuProgressListenerAdapter;
 import no.nordicsemi.android.dfu.DfuServiceInitiator;
 import no.nordicsemi.android.dfu.DfuServiceListenerHelper;
-import no.nordicsemi.android.nrftoolbox.AppHelpFragment;
-import no.nordicsemi.android.nrftoolbox.PermissionRationaleFragment;
-import no.nordicsemi.android.nrftoolbox.R;
-import no.nordicsemi.android.nrftoolbox.dfu.adapter.FileBrowserAppsAdapter;
-import no.nordicsemi.android.nrftoolbox.dfu.fragment.UploadCancelFragment;
-import no.nordicsemi.android.nrftoolbox.dfu.fragment.ZipInfoFragment;
-import no.nordicsemi.android.nrftoolbox.dfu.settings.SettingsActivity;
-import no.nordicsemi.android.nrftoolbox.dfu.settings.SettingsFragment;
-import no.nordicsemi.android.nrftoolbox.scanner.ScannerFragment;
-import no.nordicsemi.android.nrftoolbox.utility.FileHelper;
+
 
 /**
  * DfuActivity is the main DFU activity It implements DFUManagerCallbacks to receive callbacks from DFUManager class It implements

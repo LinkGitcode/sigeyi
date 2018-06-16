@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.sigeyi.R;
 import com.sigeyi.activity.base.BaseActivity;
+import com.sigeyi.csc.CSCActivity;
 import com.sigeyi.dfu.DfuActivity;
 import com.sigeyi.utils.StatusBarUtil;
 
@@ -65,6 +66,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         if (view == mDatas)
             startActivity(this, DfuActivity.class);
         else if (view == mDfu)
-            startActivity(this, DfuActivity.class);
+            startActivity(this, CSCActivity.class);
     }
 }

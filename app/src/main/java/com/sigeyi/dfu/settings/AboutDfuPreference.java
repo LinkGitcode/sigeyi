@@ -29,7 +29,7 @@ import android.preference.Preference;
 import android.util.AttributeSet;
 import android.widget.Toast;
 
-import no.nordicsemi.android.nrftoolbox.R;
+import com.sigeyi.R;
 
 public class AboutDfuPreference extends Preference {
 

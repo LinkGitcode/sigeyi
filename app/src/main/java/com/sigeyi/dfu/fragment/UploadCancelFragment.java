@@ -32,8 +32,9 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 
-import no.nordicsemi.android.nrftoolbox.R;
-import no.nordicsemi.android.nrftoolbox.dfu.DfuService;
+import com.sigeyi.R;
+import com.sigeyi.dfu.DfuService;
+
 
 /**
  * When cancel button is pressed during uploading this fragment shows uploading cancel dialog
