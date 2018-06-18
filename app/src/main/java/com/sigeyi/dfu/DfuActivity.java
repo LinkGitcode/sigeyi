@@ -70,6 +70,7 @@ import com.sigeyi.dfu.settings.SettingsActivity;
 import com.sigeyi.dfu.settings.SettingsFragment;
 import com.sigeyi.scanner.ScannerFragment;
 import com.sigeyi.utility.FileHelper;
+import com.sigeyi.utils.ScannerUtils;
 
 import java.io.File;
 
@@ -85,14 +86,14 @@ import no.nordicsemi.android.dfu.DfuServiceListenerHelper;
  * landscape orientations
  */
 public class DfuActivity extends AppCompatActivity implements LoaderCallbacks<Cursor>, ScannerFragment.OnDeviceSelectedListener,
-		UploadCancelFragment.CancelFragmentListener, PermissionRationaleFragment.PermissionDialogListener {
+		UploadCancelFragment.CancelFragmentListener, PermissionRationaleFragment.PermissionDialogListener,View.OnClickListener {
 	private static final String TAG = "DfuActivity";
 
-	private static final String PREFS_DEVICE_NAME = "no.nordicsemi.android.nrftoolbox.dfu.PREFS_DEVICE_NAME";
-	private static final String PREFS_FILE_NAME = "no.nordicsemi.android.nrftoolbox.dfu.PREFS_FILE_NAME";
-	private static final String PREFS_FILE_TYPE = "no.nordicsemi.android.nrftoolbox.dfu.PREFS_FILE_TYPE";
-	private static final String PREFS_FILE_SCOPE = "no.nordicsemi.android.nrftoolbox.dfu.PREFS_FILE_SCOPE";
-	private static final String PREFS_FILE_SIZE = "no.nordicsemi.android.nrftoolbox.dfu.PREFS_FILE_SIZE";
+    private static final String PREFS_DEVICE_NAME = "com.sigeyi.dfu.PREFS_DEVICE_NAME";
+    private static final String PREFS_FILE_NAME = "com.sigeyi.dfu.PREFS_FILE_NAME";
+    private static final String PREFS_FILE_TYPE = "com.sigeyi.dfu.PREFS_FILE_TYPE";
+    private static final String PREFS_FILE_SCOPE = "com.sigeyi.dfu.PREFS_FILE_SCOPE";
+    private static final String PREFS_FILE_SIZE = "com.sigeyi.dfu.PREFS_FILE_SIZE";
 
 	private static final String DATA_DEVICE = "device";
 	private static final String DATA_FILE_TYPE = "file_type";
@@ -275,7 +276,21 @@ public class DfuActivity extends AppCompatActivity implements LoaderCallbacks<Cu
 			mDfuError = savedInstanceState.getString(DATA_DFU_ERROR);
 		}
 
-		DfuServiceListenerHelper.registerProgressListener(this, mDfuProgressListener);
+		DfuServiceListenerHelper.registerProgressListener(getApplicationContext(), mDfuProgressListener);
+
+
+        ScannerUtils utils = new ScannerUtils();
+        BluetoothDevice device = utils.getBondedBLE(this);
+        String name = device.getName();
+        mSelectedDevice = device;
+        mUploadButton.setEnabled(mStatusOk);
+        mDeviceNameView.setText(name != null ? name : getString(R.string.not_available));
+    }
+
+
+	@Override
+	public void onClick(View v) {
+
 	}
 
 	@Override
@@ -671,6 +686,7 @@ public class DfuActivity extends AppCompatActivity implements LoaderCallbacks<Cu
 		}).setNegativeButton(R.string.cancel, null).show();
 	}
 
+	// TODO: 2018/6/18
 	private void openFileChooser() {
 		final Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
 		intent.setType(mFileTypeTmp == DfuService.TYPE_AUTO ? DfuService.MIME_TYPE_ZIP : DfuService.MIME_TYPE_OCTET_STREAM);
@@ -861,4 +877,5 @@ public class DfuActivity extends AppCompatActivity implements LoaderCallbacks<Cu
 		}
 		return false;
 	}
+
 }
