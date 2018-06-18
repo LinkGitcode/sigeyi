@@ -15,6 +15,7 @@ import com.sigeyi.dfu.DfuActivity;
 import com.sigeyi.utils.StatusBarUtil;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
@@ -32,13 +33,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //ButterKnife.bind(this);
         //状态栏透明和间距处理
-        StatusBarUtil.immersive(this, 0xff000000, 0f);
+        //StatusBarUtil.immersive(this, 0xff000000, 0f);
 
         initData();
     }
 
     private void initData() {
+        mDatas = findViewById(R.id.home_data);
+        mDfu = findViewById(R.id.home_dfu);
+
         mDatas.setOnClickListener(this);
         mDfu.setOnClickListener(this);
 
@@ -63,9 +68,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        if (view == mDatas)
+        if (view == mDfu)
             startActivity(this, DfuActivity.class);
-        else if (view == mDfu)
+        else if (view == mDatas)
             startActivity(this, CSCActivity.class);
     }
 }
