@@ -276,11 +276,12 @@ public class DfuActivity extends AppCompatActivity implements LoaderCallbacks<Cu
 			mDfuError = savedInstanceState.getString(DATA_DFU_ERROR);
 		}
 
-		DfuServiceListenerHelper.registerProgressListener(getApplicationContext(), mDfuProgressListener);
-
+		DfuServiceListenerHelper.registerProgressListener(this, mDfuProgressListener);
 
         ScannerUtils utils = new ScannerUtils();
         BluetoothDevice device = utils.getBondedBLE(this);
+        if (device==null)
+        	return;
         String name = device.getName();
         mSelectedDevice = device;
         mUploadButton.setEnabled(mStatusOk);

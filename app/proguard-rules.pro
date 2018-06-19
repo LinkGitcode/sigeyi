@@ -30,3 +30,7 @@
 #okrx2
 -dontwarn com.lzy.okrx2.**
 -keep class com.lzy.okrx2.**{*;}
+
+-dontwarn javax.annotation.**
+-dontwarn javax.inject.**
+-dontwarn sun.misc.Unsafe

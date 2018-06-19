@@ -24,7 +24,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
-            minifyEnabled true
+            minifyEnabled false
             useProguard true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -52,12 +52,10 @@ dependencies {
     implementation 'com.jakewharton.timber:timber:4.7.0'
     //圆角ImageView
     implementation 'com.makeramen:roundedimageview:2.3.0'
-
     //必须使用
     implementation 'com.lzy.net:okgo:3.0.4'
     implementation 'com.lzy.net:okrx2:2.0.2'
     implementation 'com.lzy.net:okserver:2.0.5'
-
     implementation 'no.nordicsemi.android:dfu:1.6.1'
     implementation 'no.nordicsemi.android:ble:1.1.0'
     implementation 'no.nordicsemi.android.support.v18:scanner:1.0.0'

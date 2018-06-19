@@ -31,7 +31,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <!--android:name="no.nordicsemi.android.nrftoolbox.dfu.DfuActivity"-->
         <activity
             android:name=".dfu.DfuActivity"
             android:icon="@mipmap/ic_dfu_feature"
@@ -39,7 +39,7 @@
             android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-                <category android:name="sigeyi.android.nrftoolbox.LAUNCHER" />
+                <category android:name="no.nordicsemi.android.nrftoolbox.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
@@ -89,7 +89,7 @@
             android:label="@string/csc_settings_title" />
 
         <service
-            android:name="dfu.DfuService"
+            android:name=".dfu.DfuService"
             android:exported="true"
             android:label="@string/dfu_service_title">
             <intent-filter>
@@ -109,7 +109,7 @@
             android:noHistory="true"
             android:theme="@style/AppTheme.Translucent">
             <intent-filter>
-                <action android:name="sigeyi.android.action.DFU_UPLOAD" />
+                <action android:name="no.nordicsemi.android.action.DFU_UPLOAD" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
