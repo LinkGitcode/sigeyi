@@ -196,16 +196,8 @@
                         android:onClick="onSelectFileClicked"
                         android:text="@string/dfu_action_select_file" />
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:onClick="onSelectFileHelpClicked"
-                        android:src="@mipmap/ic_help" />
                 </LinearLayout>
             </LinearLayout>
-
-            <!-- DFU section -->
 
             <LinearLayout
                 android:id="@+id/dfu_pane"

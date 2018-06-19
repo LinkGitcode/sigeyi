@@ -16,29 +16,31 @@
         android:required="true" />
 
     <application
+        android:name=".activity.App"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_home_logo"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
             android:name=".activity.MainActivity"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
+            android:theme="@style/Theme.Design.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--android:name="no.nordicsemi.android.nrftoolbox.dfu.DfuActivity"-->
+        <!-- android:name="no.nordicsemi.android.nrftoolbox.dfu.DfuActivity" -->
         <activity
             android:name=".dfu.DfuActivity"
             android:icon="@mipmap/ic_dfu_feature"
             android:label="@string/dfu_feature_title"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
+            android:theme="@style/Theme.Design.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="no.nordicsemi.android.nrftoolbox.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -48,16 +50,17 @@
         <activity
             android:name=".dfu.NotificationActivity"
             android:label="@string/dfu_feature_title" />
-
         <activity
             android:name=".activity.SplashscreenActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.Fullscreen">
-            <!--<intent-filter>-->
-            <!--<action android:name="android.intent.action.MAIN" />-->
 
-            <!--<category android:name="android.intent.category.DEFAULT" />-->
-            <!--</intent-filter>-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+
+
+            <!-- <category android:name="android.intent.category.DEFAULT" /> -->
+            <!-- </intent-filter> -->
 
             <meta-data
                 android:name="android.app.shortcuts"
@@ -77,7 +80,7 @@
             android:icon="@mipmap/ic_csc_feature"
             android:label="@string/csc_feature_title"
             android:launchMode="singleTask"
-            android:theme="@style/Theme.AppCompat.NoActionBar">
+            android:theme="@style/Theme.Design.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -98,7 +101,6 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </service>
-
         <service
             android:name="csc.CSCService"
             android:label="@string/csc_feature_title" />
@@ -114,6 +116,10 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activity.DfuNetAcitivity"
+            android:label="@string/title_activity_dfu_net_acitivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

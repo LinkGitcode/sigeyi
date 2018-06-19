@@ -587,7 +587,8 @@ public class DfuActivity extends AppCompatActivity implements LoaderCallbacks<Cu
 		final boolean statusOk = mStatusOk = MimeTypeMap.getFileExtensionFromUrl(fileName).matches(extension);
 		mFileStatusView.setText(statusOk ? R.string.dfu_file_status_ok : R.string.dfu_file_status_invalid);
 		mUploadButton.setEnabled(mSelectedDevice != null && statusOk);
-
+		mScope = null;
+		mFileScopeView.setText("ALL");
 		// Ask the user for the Init packet file if HEX or BIN files are selected. In case of a ZIP file the Init packets should be included in the ZIP.
 		if (statusOk) {
 			if (fileType != DfuService.TYPE_AUTO) {

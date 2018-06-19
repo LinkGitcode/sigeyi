@@ -28,6 +28,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     // 保存用户按返回键的时间
     private long mExitTime = 0;
+    private Button mTest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,9 +44,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private void initData() {
         mDatas = findViewById(R.id.home_data);
         mDfu = findViewById(R.id.home_dfu);
+        mTest = findViewById(R.id.test);
 
         mDatas.setOnClickListener(this);
         mDfu.setOnClickListener(this);
+        mTest.setOnClickListener(this);
 
     }
 
@@ -72,5 +75,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             startActivity(this, DfuActivity.class);
         else if (view == mDatas)
             startActivity(this, CSCActivity.class);
+        else if (view == mTest)
+            startActivity(this, DfuNetAcitivity.class);
     }
 }

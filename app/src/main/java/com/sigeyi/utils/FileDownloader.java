@@ -39,29 +39,6 @@ public class FileDownloader {
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread());
-
-        observable.subscribe(new Observer<Response<File>>() {
-            @Override
-            public void onSubscribe(@NonNull Disposable d) {
-
-            }
-
-            @Override
-            public void onNext(@NonNull Response<File> response) {
-                File file = response.body();
-                file.getAbsolutePath();
-            }
-
-            @Override
-            public void onError(@NonNull Throwable e) {
-                e.printStackTrace();
-            }
-
-            @Override
-            public void onComplete() {
-
-            }
-        });
         return observable;
     }
 
