@@ -45,6 +45,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mDatas = findViewById(R.id.home_data);
         mDfu = findViewById(R.id.home_dfu);
         mTest = findViewById(R.id.test);
+        mHome = findViewById(R.id.home);
 
         mDatas.setOnClickListener(this);
         mDfu.setOnClickListener(this);
