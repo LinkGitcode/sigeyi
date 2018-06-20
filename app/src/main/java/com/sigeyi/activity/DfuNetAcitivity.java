@@ -6,6 +6,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.lzy.okgo.model.Response;
 import com.sigeyi.R;
@@ -22,8 +23,21 @@ import io.reactivex.disposables.Disposable;
 
 public class DfuNetAcitivity extends AppCompatActivity {
 
+    @BindView(R.id.dfu_device_btn)
+    private Button mDeviceBtn;
+
+    @BindView(R.id.dfu_file_btn)
+    private Button mFileBtn;
+
+    @BindView(R.id.dfu_file_tv)
+    private TextView mFileTv;
+
+    @BindView(R.id.dfu_device_tv)
+    private TextView mDeviceTv;
+
     @BindView(R.id.load)
-    private Button mLoad;
+    private Button mTestLoad;
+
     String downloadUrl = "http://183.2.192.171/appdl.hicloud.com/dl/appdl/application/apk/56/5615f9e8fc1c4575962bbe71500be994/com.ifeng.newvideo.1806111622.apk?mkey=5b29675c12bb058c&f=2664&c=0&sign=portal@portal1529429208757&source=portalsite&p=.apk";
 
     @Override
@@ -33,6 +47,11 @@ public class DfuNetAcitivity extends AppCompatActivity {
         ButterKnife.bind(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        initData();
+        test();
+    }
+
+    private void test() {
         View load = findViewById(R.id.load);
         load.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,6 +60,11 @@ public class DfuNetAcitivity extends AppCompatActivity {
             }
         });
     }
+
+    private void initData() {
+
+    }
+
 
     private void performDownloading() {
         FileDownloader downloader = new FileDownloader();

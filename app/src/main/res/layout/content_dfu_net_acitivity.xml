@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,20 +9,81 @@
     tools:context=".activity.DfuNetAcitivity"
     tools:showIn="@layout/activity_dfu_net_acitivity">
 
+    <TextView
+        android:id="@+id/dfu_device_tv"
+        android:layout_width="match_parent"
+        android:layout_height="21dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginStart="50dp"
+        android:background="@drawable/dfu_device_bg"
+        android:gravity="center_vertical"
+        android:text="设备名字"
+        app:layout_constraintBottom_toTopOf="@+id/dfu_file_tv"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <Button
+        android:id="@+id/dfu_device_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="30dp"
+        android:background="@color/actionBarColor"
+        android:text="选择设备"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dfu_device_tv"/>
+
+    <TextView
+        android:id="@+id/dfu_file_tv"
+        android:layout_width="match_parent"
+        android:layout_height="19dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginStart="50dp"
+        android:background="@drawable/dfu_device_bg"
+        android:gravity="center_vertical"
+        android:text="软件包名字"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <Button
+        android:id="@+id/dfu_file_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="30dp"
+        android:background="@color/actionBarColor"
+        android:text="选择固件"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dfu_file_tv"/>
+
+    <Button
+        android:id="@+id/dfu_upload_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:background="@color/actionBarColor"
+        android:text="升级"
+        android:textSize="20dp"
+        tools:layout_editor_absoluteX="148dp"
+        tools:layout_editor_absoluteY="359dp"/>
+
     <Button
         android:id="@+id/load"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:background="@color/actionBarColor"
         android:padding="20dp"
         android:text="点我下载"
         android:textSize="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="132dp"
+        tools:layout_editor_absoluteY="414dp"/>
 </android.support.constraint.ConstraintLayout>
