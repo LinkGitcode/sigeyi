@@ -17,13 +17,9 @@ package com.sigeyi.mvp.presenter;
 
 public interface IPresenter {
 
-    /**
-     * 做一些初始化操作
-     */
     void onCreate();
 
-    /**
-     *
-     */
+    void onLoadList();
+
     void onDestroy();
 }

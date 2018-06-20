@@ -37,8 +37,7 @@ public class FileDownloader {
                     public void accept(@NonNull Disposable disposable) throws Exception {
 
                     }
-                })
-                .observeOn(AndroidSchedulers.mainThread());
+                });
         return observable;
     }
 

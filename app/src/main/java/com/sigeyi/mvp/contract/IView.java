@@ -1,12 +1,10 @@
 package com.sigeyi.mvp.contract;
 
+import android.os.Bundle;
+
 public interface IView {
 
-    //void initDatas();
+    void onInitView(Bundle savedInstanceState);
 
-    void showTips(String msg);
-
-    void showDefView();
-
-    void onDestory();
+    void onDestoryView();
 }

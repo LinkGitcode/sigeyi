@@ -1,5 +1,9 @@
 package com.sigeyi.mvp.contract;
 
+import com.sigeyi.mvp.model.entity.FirmwareBean;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -9,11 +13,11 @@ import io.reactivex.Observable;
  */
 public interface Contract {
 
-    interface NaviView extends IView {
-        void refreshView(List<String> naviTables);
+    interface FirmwareUpdateView extends IView {
+        void refreshView(ArrayList<FirmwareBean> FirmwareBeans);
     }
 
-    interface NaviModel extends IModel {
-        Observable<List<String>> getNavigations();
+    interface FirmwareUpdateModel extends IModel {
+        Observable<ArrayList<FirmwareBean>> getUpdateInfo(HashMap<String, String> map);
     }
 }

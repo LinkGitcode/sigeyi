@@ -51,6 +51,10 @@ public class BasePresenter<M extends IModel, V extends IView> implements IPresen
 
     }
 
+    @Override
+    public void onLoadList() {
+
+    }
 
     /**
      * 在框架中 {@link Activity#onDestroy()} 时会默认调用 {@link IPresenter#onDestroy()}

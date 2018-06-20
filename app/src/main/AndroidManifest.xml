@@ -32,12 +32,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!-- android:name="no.nordicsemi.android.nrftoolbox.dfu.DfuActivity" -->
+
         <activity
             android:name=".dfu.DfuActivity"
             android:icon="@mipmap/ic_dfu_feature"
             android:label="@string/dfu_feature_title"
-            android:theme="@style/Theme.Design.Light.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -57,7 +57,6 @@
 
             <!-- <intent-filter> -->
             <!-- <action android:name="android.intent.action.MAIN" /> -->
-
 
             <!-- <category android:name="android.intent.category.DEFAULT" /> -->
             <!-- </intent-filter> -->
@@ -80,7 +79,7 @@
             android:icon="@mipmap/ic_csc_feature"
             android:label="@string/csc_feature_title"
             android:launchMode="singleTask"
-            android:theme="@style/Theme.Design.Light.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -109,7 +108,7 @@
             android:name="dfu.DfuInitiatorActivity"
             android:label="@string/dfu_service_title"
             android:noHistory="true"
-            android:theme="@style/AppTheme.Translucent">
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="no.nordicsemi.android.action.DFU_UPLOAD" />
 
@@ -119,7 +118,13 @@
         <activity
             android:name=".activity.DfuNetAcitivity"
             android:label="@string/title_activity_dfu_net_acitivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="no.nordicsemi.android.nrftoolbox.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
