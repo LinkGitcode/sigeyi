@@ -162,6 +162,11 @@ public class DfuNetAcitivity extends AppCompatActivity implements Contract.Firmw
     }
 
     @Override
+    public void loadFile(Response<File> response) {
+
+    }
+
+    @Override
     public void onDestoryView() {
 
     }

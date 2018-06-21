@@ -3,6 +3,7 @@ package com.sigeyi.mvp.presenter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 
 import com.lzy.okgo.model.Response;
@@ -72,16 +73,14 @@ public class FirmwareUpdatePresenter extends BasePresenter<Contract.FirmwareUpda
 
                     @Override
                     public void onNext(@NonNull Response<File> response) {
-                        File file = response.body();
-                        file.getAbsolutePath();
-                        URI uri = file.toURI();
-                        Log.d("hcg", "onNext" + file.getAbsolutePath()+"  uri="+uri);
+                        mRootView.loadFile(response);
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
                         e.printStackTrace();
                         Log.d("hcg", "onError" + e.toString());
+                        Toast.makeText(mCtx,"下载失败，链接失效!",Toast.LENGTH_SHORT).show();
                     }
 
                     @Override

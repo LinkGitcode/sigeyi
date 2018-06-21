@@ -43,6 +43,7 @@ import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.content.LocalBroadcastManager;
@@ -60,6 +61,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.lzy.okgo.model.Response;
 import com.sigeyi.R;
 import com.sigeyi.activity.AppHelpFragment;
 import com.sigeyi.activity.PermissionRationaleFragment;
@@ -68,11 +70,18 @@ import com.sigeyi.dfu.fragment.UploadCancelFragment;
 import com.sigeyi.dfu.fragment.ZipInfoFragment;
 import com.sigeyi.dfu.settings.SettingsActivity;
 import com.sigeyi.dfu.settings.SettingsFragment;
+import com.sigeyi.http.Api;
+import com.sigeyi.mvp.contract.Contract;
+import com.sigeyi.mvp.model.FirmwareUpdateModel;
+import com.sigeyi.mvp.model.entity.FirmwareBean;
+import com.sigeyi.mvp.presenter.FirmwareUpdatePresenter;
 import com.sigeyi.scanner.ScannerFragment;
 import com.sigeyi.utility.FileHelper;
 import com.sigeyi.utils.ScannerUtils;
 
 import java.io.File;
+import java.net.URI;
+import java.util.ArrayList;
 
 import no.nordicsemi.android.dfu.DfuProgressListener;
 import no.nordicsemi.android.dfu.DfuProgressListenerAdapter;
@@ -86,7 +95,7 @@ import no.nordicsemi.android.dfu.DfuServiceListenerHelper;
  * landscape orientations
  */
 public class DfuActivity extends AppCompatActivity implements LoaderCallbacks<Cursor>, ScannerFragment.OnDeviceSelectedListener,
-        UploadCancelFragment.CancelFragmentListener, PermissionRationaleFragment.PermissionDialogListener, View.OnClickListener {
+        UploadCancelFragment.CancelFragmentListener, PermissionRationaleFragment.PermissionDialogListener, View.OnClickListener ,Contract.FirmwareUpdateView {
     private static final String TAG = "DfuActivity";
 
     private static final String PREFS_DEVICE_NAME = "com.sigeyi.dfu.PREFS_DEVICE_NAME";
@@ -286,35 +295,18 @@ public class DfuActivity extends AppCompatActivity implements LoaderCallbacks<Cu
 
         ScannerUtils utils = new ScannerUtils();
         BluetoothDevice device = utils.getBondedBLE(this);
-        if (device == null)
+        if (device == null){
+            Toast.makeText(this,"扫描失败,未得到已配对的蓝牙设备！",Toast.LENGTH_SHORT).show();
             return;
+        }
         String name = device.getName();
+        Toast.makeText(this, "扫描成功,蓝牙设备=" + name, Toast.LENGTH_SHORT).show();
         mSelectedDevice = device;
         mUploadButton.setEnabled(mStatusOk);
         mDeviceNameView.setText(name != null ? name : getString(R.string.not_available));
 
-        upload();
+        onInitView(savedInstanceState);
     }
-
-    private void upload() {
-
-        final DfuServiceInitiator starter = new DfuServiceInitiator(mSelectedDevice.getAddress())
-                .setDeviceName(mSelectedDevice.getName())
-                .setKeepBond(false)
-                .setForceDfu(false)
-                .setPacketsReceiptNotificationsEnabled(false)
-                .setPacketsReceiptNotificationsValue(0)
-                .setUnsafeExperimentalButtonlessServiceInSecureDfuEnabled(true);
-        if (mFileType == DfuService.TYPE_AUTO) {
-            starter.setZip(mFileStreamUri, mFilePath);
-            if (mScope != null)
-                starter.setScope(mScope);
-        } else {
-            starter.setBinOrHex(mFileType, mFileStreamUri, mFilePath).setInitFile(mInitFileStreamUri, mInitFilePath);
-        }
-        starter.start(this, DfuService.class);
-    }
-
 
     @Override
     public void onClick(View v) {
@@ -907,4 +899,55 @@ public class DfuActivity extends AppCompatActivity implements LoaderCallbacks<Cu
         return false;
     }
 
+    @Override
+    public void refreshView(ArrayList<FirmwareBean> FirmwareBeans) {
+
+    }
+
+    @Override
+    public void loadFile(Response<File> response) {
+        File file = response.body();
+        URI uri = file.toURI();
+        final String path = uri.getPath();
+        mFilePath = path;
+        updateFileInfo(file.getName(), file.length(), mFileTypeTmp);
+       // upload();
+        Snackbar.make(mFileNameView,file.getAbsolutePath(),2000).show();
+    }
+
+    private void upload() {
+        final DfuServiceInitiator starter = new DfuServiceInitiator(mSelectedDevice.getAddress())
+                .setDeviceName(mSelectedDevice.getName())
+                .setKeepBond(false)
+                .setForceDfu(false)
+                .setPacketsReceiptNotificationsEnabled(false)
+                .setPacketsReceiptNotificationsValue(0)
+                .setUnsafeExperimentalButtonlessServiceInSecureDfuEnabled(true);
+        if (mFileType == DfuService.TYPE_AUTO) {
+            starter.setZip(mFileStreamUri, mFilePath);
+            if (mScope != null)
+                starter.setScope(mScope);
+        } else {
+            starter.setBinOrHex(mFileType, mFileStreamUri, mFilePath).setInitFile(mInitFileStreamUri, mInitFilePath);
+        }
+        starter.start(this, DfuService.class);
+    }
+
+    protected FirmwareUpdatePresenter mPresenter;
+
+    @Override
+    public void onInitView(Bundle savedInstanceState) {
+        mPresenter = new FirmwareUpdatePresenter(this, new FirmwareUpdateModel(), this);
+        findViewById(R.id.action_download_file).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPresenter.downloadFirmware(Api.testFirmwareURL1, null);
+            }
+        });
+    }
+
+    @Override
+    public void onDestoryView() {
+
+    }
 }
