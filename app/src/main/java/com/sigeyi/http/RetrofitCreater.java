@@ -13,7 +13,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitCreater {
     private static RetrofitCreater mInstance;
-    private OkHttpClient mClient;
     private Retrofit mRetrofit;
 
     public static RetrofitCreater getInstance() {
@@ -32,24 +31,20 @@ public class RetrofitCreater {
     }
 
     public void init() {
-        if (mClient == null)
-            mClient = new OkHttpClient.Builder()
-                    .addInterceptor(new RequestInterceptor(GlobalHttpHandler.EMPTY, RequestInterceptor.Level.ALL))
-                    .build();
-        if (mRetrofit == null) {
-            mRetrofit = new Retrofit.Builder()
-                    .baseUrl(Api.NAVI_DOMAIN)
-                    .client(mClient)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                    .build();
-        }
+        OkHttpClient client = new OkHttpClient.Builder()
+                .addInterceptor(new RequestInterceptor(GlobalHttpHandler.EMPTY, RequestInterceptor.Level.ALL))
+                .build();
+        mRetrofit = new Retrofit.Builder()
+                .baseUrl(Api.NAVI_DOMAIN)
+                .client(client)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .build();
+
     }
 
     public void onDestory() {
         if (mRetrofit != null)
             mRetrofit = null;
-        if (mClient != null)
-            mClient = null;
     }
 }

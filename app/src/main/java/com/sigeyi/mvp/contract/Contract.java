@@ -6,7 +6,6 @@ import com.sigeyi.mvp.model.entity.FirmwareBean;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import io.reactivex.Observable;
 
@@ -17,6 +16,7 @@ public interface Contract {
 
     interface FirmwareUpdateView extends IView {
         void refreshView(ArrayList<FirmwareBean> FirmwareBeans);
+
         void loadFile(Response<File> response);
     }
 

@@ -8,10 +8,8 @@ import com.sigeyi.mvp.model.service.CommonService;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import io.reactivex.Observable;
-import io.reactivex.Scheduler;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
@@ -36,7 +34,7 @@ public class FirmwareUpdateModel implements Contract.FirmwareUpdateModel {
     }
 
     @Override
-    public void onDestroy() {
+    public void onDestoryModel() {
 
     }
 

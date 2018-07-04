@@ -2,5 +2,8 @@ package com.sigeyi.mvp.contract;
 
 public interface IModel {
 
-    void onDestroy();
+    /**
+     * 解绑model
+     */
+    void onDestoryModel();
 }

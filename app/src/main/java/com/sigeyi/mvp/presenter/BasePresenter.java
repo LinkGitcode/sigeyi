@@ -1,11 +1,11 @@
 package com.sigeyi.mvp.presenter;
 
-import android.app.Activity;
 import android.content.Context;
 
-import com.sigeyi.mvp.contract.IModel;
-import com.sigeyi.mvp.contract.IView;
 import com.sigeyi.http.Preconditions;
+import com.sigeyi.mvp.contract.IModel;
+import com.sigeyi.mvp.contract.IPresenter;
+import com.sigeyi.mvp.contract.IView;
 
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
@@ -20,8 +20,6 @@ public class BasePresenter<M extends IModel, V extends IView> implements IPresen
     protected Context mCtx;
 
     /**
-     * 如果当前页面同时需要 Model 层和 View 层,则使用此构造函数(默认)
-     *
      * @param model
      * @param rootView
      */
@@ -31,39 +29,27 @@ public class BasePresenter<M extends IModel, V extends IView> implements IPresen
         this.mCtx = ctx;
         this.mModel = model;
         this.mRootView = rootView;
-        onCreate();
     }
 
     /**
-     * 如果当前页面不需要操作数据,只需要 View 层,则使用此构造函数
-     *
      * @param rootView
      */
     public BasePresenter(V rootView) {
         Preconditions.checkNotNull(rootView, "%s cannot be null", IView.class.getName());
         this.mRootView = rootView;
-        onCreate();
     }
 
 
     @Override
-    public void onCreate() {
+    public void onAttach() {
 
     }
 
     @Override
-    public void onLoadList() {
-
-    }
-
-    /**
-     * 在框架中 {@link Activity#onDestroy()} 时会默认调用 {@link IPresenter#onDestroy()}
-     */
-    @Override
-    public void onDestroy() {
+    public void onDetach() {
         unDispose();//解除订阅
         if (mModel != null)
-            mModel.onDestroy();
+            mModel.onDestoryModel();
         this.mModel = null;
         this.mRootView = null;
         this.mCompositeDisposable = null;
@@ -89,6 +75,4 @@ public class BasePresenter<M extends IModel, V extends IView> implements IPresen
             mCompositeDisposable.clear();//保证 Activity 结束时取消所有正在执行的订阅
         }
     }
-
-
 }
