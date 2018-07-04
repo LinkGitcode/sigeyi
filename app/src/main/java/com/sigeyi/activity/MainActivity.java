@@ -12,6 +12,7 @@ import com.sigeyi.R;
 import com.sigeyi.activity.base.BaseActivity;
 import com.sigeyi.csc.CSCActivity;
 import com.sigeyi.dfu.DfuActivity;
+import com.umeng.analytics.MobclickAgent;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -51,6 +52,18 @@ public class MainActivity extends BaseActivity {
         } else {
             finish();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 
     @OnClick({R.id.home_dfu, R.id.home_data})

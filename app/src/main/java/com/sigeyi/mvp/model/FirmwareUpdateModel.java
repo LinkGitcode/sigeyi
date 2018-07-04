@@ -24,13 +24,7 @@ public class FirmwareUpdateModel implements Contract.FirmwareUpdateModel {
                 .create(CommonService.class)
                 .getUpdateInfo(map)
                 .subscribeOn(Schedulers.io())
-                .map(new Function<FirmwareJson, ArrayList<FirmwareBean>>() {
-                    @Override
-                    public ArrayList<FirmwareBean> apply(FirmwareJson firmwareJson) throws Exception {
-                        ArrayList<FirmwareBean> data = firmwareJson.getData();
-                        return data;
-                    }
-                });
+                .map(firmwareJson -> firmwareJson.getData());
     }
 
     @Override

@@ -78,6 +78,7 @@ import com.sigeyi.mvp.presenter.FirmwareUpdatePresenter;
 import com.sigeyi.scanner.ScannerFragment;
 import com.sigeyi.utility.FileHelper;
 import com.sigeyi.utils.ScannerUtils;
+import com.umeng.analytics.MobclickAgent;
 
 import java.io.File;
 import java.net.URI;
@@ -324,6 +325,7 @@ public class DfuActivity extends BaseActivity implements LoaderCallbacks<Cursor>
 
     private void setGUI() {
         final Toolbar toolbar = findViewById(R.id.toolbar_actionbar);
+        //toolbar.setBackgroundColor(0X00ffffff);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -344,6 +346,7 @@ public class DfuActivity extends BaseActivity implements LoaderCallbacks<Cursor>
     @Override
     protected void onResume() {
         super.onResume();
+        MobclickAgent.onResume(this);
         mResumed = true;
         if (mDfuCompleted)
             onTransferCompleted();
@@ -361,6 +364,7 @@ public class DfuActivity extends BaseActivity implements LoaderCallbacks<Cursor>
     @Override
     protected void onPause() {
         super.onPause();
+        MobclickAgent.onPause(this);
         mResumed = false;
     }
 
@@ -403,6 +407,7 @@ public class DfuActivity extends BaseActivity implements LoaderCallbacks<Cursor>
         startActivityForResult(enableIntent, ENABLE_BT_REQ);
     }
 
+    // TODO: 2018/7/4  这里可以做成bottomSheetDialog
     private void showDeviceScanningDialog() {
         final ScannerFragment dialog = ScannerFragment.getInstance(null); // Device that is advertising directly does not have the GENERAL_DISCOVERABLE nor LIMITED_DISCOVERABLE flag set.
         dialog.show(getSupportFragmentManager(), "scan_fragment");
@@ -439,68 +444,80 @@ public class DfuActivity extends BaseActivity implements LoaderCallbacks<Cursor>
         // TODO: 2018/6/21 文件选择返回
         switch (requestCode) {
             case SELECT_FILE_REQ: {
-                // clear previous data
-                mFileType = mFileTypeTmp;
-                mFilePath = null;
-                mFileStreamUri = null;
-
-                // and read new one
-                final Uri uri = data.getData();
-                /*
-                 * The URI returned from application may be in 'file' or 'content' schema. 'File' schema allows us to create a File object and read details from if
-                 * directly. Data from 'Content' schema must be read by Content Provider. To do that we are using a Loader.
-                 */
-                if (uri.getScheme().equals("file")) {
-                    // the direct path to the file has been returned
-                    final String path = uri.getPath();
-                    final File file = new File(path);
-                    mFilePath = path;
-
-                    updateFileInfo(file.getName(), file.length(), mFileType);
-                } else if (uri.getScheme().equals("content")) {
-                    // an Uri has been returned
-                    mFileStreamUri = uri;
-                    // if application returned Uri for streaming, let's us it. Does it works?
-                    // FIXME both Uris works with Google Drive app. Why both? What's the difference? How about other apps like DropBox?
-                    final Bundle extras = data.getExtras();
-                    if (extras != null && extras.containsKey(Intent.EXTRA_STREAM))
-                        mFileStreamUri = extras.getParcelable(Intent.EXTRA_STREAM);
-
-                    // file name and size must be obtained from Content Provider
-                    final Bundle bundle = new Bundle();
-                    bundle.putParcelable(EXTRA_URI, uri);
-                    getLoaderManager().restartLoader(SELECT_FILE_REQ, bundle, this);
-                }
+                selectedFile(data);
                 break;
             }
             case SELECT_INIT_FILE_REQ: {
-                mInitFilePath = null;
-                mInitFileStreamUri = null;
-
-                // and read new one
-                final Uri uri = data.getData();
-                /*
-                 * The URI returned from application may be in 'file' or 'content' schema. 'File' schema allows us to create a File object and read details from if
-                 * directly. Data from 'Content' schema must be read by Content Provider. To do that we are using a Loader.
-                 */
-                if (uri.getScheme().equals("file")) {
-                    // the direct path to the file has been returned
-                    mInitFilePath = uri.getPath();
-                    mFileStatusView.setText(R.string.dfu_file_status_ok_with_init);
-                } else if (uri.getScheme().equals("content")) {
-                    // an Uri has been returned
-                    mInitFileStreamUri = uri;
-                    // if application returned Uri for streaming, let's us it. Does it works?
-                    // FIXME both Uris works with Google Drive app. Why both? What's the difference? How about other apps like DropBox?
-                    final Bundle extras = data.getExtras();
-                    if (extras != null && extras.containsKey(Intent.EXTRA_STREAM))
-                        mInitFileStreamUri = extras.getParcelable(Intent.EXTRA_STREAM);
-                    mFileStatusView.setText(R.string.dfu_file_status_ok_with_init);
-                }
+                selectInitFile(data);
                 break;
             }
             default:
                 break;
+        }
+    }
+
+    private void selectInitFile(Intent data) {
+        mInitFilePath = null;
+        mInitFileStreamUri = null;
+
+        // and read new one
+        final Uri uri = data.getData();
+        /*
+         * The URI returned from application may be in 'file' or 'content' schema. 'File' schema allows us to create a File object and read details from if
+         * directly. Data from 'Content' schema must be read by Content Provider. To do that we are using a Loader.
+         */
+        if (uri.getScheme().equals("file")) {
+            // the direct path to the file has been returned
+            mInitFilePath = uri.getPath();
+            mFileStatusView.setText(R.string.dfu_file_status_ok_with_init);
+        } else if (uri.getScheme().equals("content")) {
+            // an Uri has been returned
+            mInitFileStreamUri = uri;
+            // if application returned Uri for streaming, let's us it. Does it works?
+            // FIXME both Uris works with Google Drive app. Why both? What's the difference? How about other apps like DropBox?
+            final Bundle extras = data.getExtras();
+            if (extras != null && extras.containsKey(Intent.EXTRA_STREAM))
+                mInitFileStreamUri = extras.getParcelable(Intent.EXTRA_STREAM);
+            mFileStatusView.setText(R.string.dfu_file_status_ok_with_init);
+        }
+    }
+
+    /**
+     * todo 选择的是文件，走这里。注意两者的区别
+     * @param data
+     */
+    private void selectedFile(Intent data) {
+        // clear previous data
+        mFileType = mFileTypeTmp;
+        mFilePath = null;
+        mFileStreamUri = null;
+
+        // and read new one
+        final Uri uri = data.getData();
+        /*
+         * The URI returned from application may be in 'file' or 'content' schema. 'File' schema allows us to create a File object and read details from if
+         * directly. Data from 'Content' schema must be read by Content Provider. To do that we are using a Loader.
+         */
+        if (uri.getScheme().equals("file")) {
+            // the direct path to the file has been returned
+            final String path = uri.getPath();
+            final File file = new File(path);
+            mFilePath = path;
+
+            updateFileInfo(file.getName(), file.length(), mFileType);
+        } else if (uri.getScheme().equals("content")) {
+            // an Uri has been returned
+            mFileStreamUri = uri;
+            // if application returned Uri for streaming, let's us it. Does it works?
+            // FIXME both Uris works with Google Drive app. Why both? What's the difference? How about other apps like DropBox?
+            final Bundle extras = data.getExtras();
+            if (extras != null && extras.containsKey(Intent.EXTRA_STREAM))
+                mFileStreamUri = extras.getParcelable(Intent.EXTRA_STREAM);
+
+            // file name and size must be obtained from Content Provider
+            final Bundle bundle = new Bundle();
+            bundle.putParcelable(EXTRA_URI, uri);
+            getLoaderManager().restartLoader(SELECT_FILE_REQ, bundle, this);
         }
     }
 
@@ -638,10 +655,11 @@ public class DfuActivity extends BaseActivity implements LoaderCallbacks<Cursor>
 
     /**
      * Called when Select File was pressed
-     *
-     * @param view a button that was pressed
+     * <p>
+     * a button that was pressed
      */
-    public void onSelectFileClicked(final View view) {
+    public void onSelectFileClicked() {
+        // TODO: 2018/7/4 选择文件按钮
         mFileTypeTmp = mFileType;
         int index = 0;
         switch (mFileType) {
@@ -711,7 +729,7 @@ public class DfuActivity extends BaseActivity implements LoaderCallbacks<Cursor>
     /**
      * Callback of UPDATE/CANCEL button on DfuActivity
      */
-    public void onUploadClicked(final View view) {
+    public void onUploadClicked() {
         if (isDfuServiceRunning()) {
             showUploadCancelDialog();
             return;
@@ -761,7 +779,8 @@ public class DfuActivity extends BaseActivity implements LoaderCallbacks<Cursor>
     /**
      * Callback of CONNECT/DISCONNECT button on DfuActivity
      */
-    public void onConnectClicked(final View view) {
+    public void onConnectClicked() {
+        // TODO: 2018/7/4  选择蓝牙
         if (isBLEEnabled()) {
             showDeviceScanningDialog();
         } else {
@@ -918,8 +937,35 @@ public class DfuActivity extends BaseActivity implements LoaderCallbacks<Cursor>
         }
     }
 
-    @OnClick(R.id.action_download_file)
+    /**
+     * 所有的点击事件都在这里
+     *
+     * @param view
+     */
+    @OnClick({R.id.action_download_file, R.id.action_connect, R.id.action_select_file, R.id.action_upload})
     public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.action_download_file:
+                onDownloadDfu();
+                break;
+            case R.id.action_connect:
+                onConnectClicked();
+                break;
+            case R.id.action_select_file:
+                onSelectFileClicked();
+                break;
+            case R.id.action_upload:
+                onUploadClicked();
+                break;
+            default:
+                break;
+        }
+    }
+
+    /**
+     * 下载固件
+     */
+    private void onDownloadDfu() {
         mPresenter.downloadFirmware(Api.testFirmwareURL1, null);
     }
 

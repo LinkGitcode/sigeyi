@@ -35,17 +35,10 @@ public class FirmwareUpdatePresenter extends BasePresenter<Contract.FirmwareUpda
         super.onAttach();
         mModel.getUpdateInfo(null)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Consumer<ArrayList<FirmwareBean>>() {
-                    @Override
-                    public void accept(ArrayList<FirmwareBean> firmwareBeans) throws Exception {
-                        mRootView.refreshView(firmwareBeans);
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) throws Exception {
-                        Timber.d(throwable);
-                    }
-                });
+                .subscribe(firmwareBeans ->
+                                mRootView.refreshView(firmwareBeans)
+                        , throwable ->
+                                Timber.d(throwable));
     }
 
     public void downloadFirmware(String url, String md5) {

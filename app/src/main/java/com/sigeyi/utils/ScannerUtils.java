@@ -7,6 +7,8 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.ParcelUuid;
 
+import com.sigeyi.http.Api;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -18,16 +20,11 @@ import no.nordicsemi.android.support.v18.scanner.ScanResult;
 import no.nordicsemi.android.support.v18.scanner.ScanSettings;
 
 /**
- * Created by jingjing on 2018/6/18.
+ * Created by huangchangguo on 2018/6/18.
  * 蓝牙的工具类
  */
 
 public class ScannerUtils {
-
-    public static final String SIGEYI_TYPE1 = "SIGEYI";
-    public static final String SIGEYI_TYPE2 = "AXPOWSER";
-    public static final String SIGEYI_TYPE3 = "AXO";
-    public static final String SIGEYI_TYPE4 = "DLS";
     private ParcelUuid mUuid;
     private boolean mIsScanning = false;
     private final static long SCAN_DURATION = 5000;
@@ -38,17 +35,18 @@ public class ScannerUtils {
         BluetoothManager manager = (BluetoothManager) ctx.getSystemService(Context.BLUETOOTH_SERVICE);
         BluetoothAdapter adapter = manager.getAdapter();
         Set<BluetoothDevice> devices = adapter.getBondedDevices();
-        for (BluetoothDevice device : devices) {
+        for (BluetoothDevice device : devices) {//得到已配对的设备
             String name = device.getName();
-            if (name.contains(SIGEYI_TYPE1)
-                    || name.contains(SIGEYI_TYPE2)
-                    || name.contains(SIGEYI_TYPE3)
-                    || name.contains(SIGEYI_TYPE4)) {
+            if (name.contains(Api.SIGEYI_TYPE1)
+                    || name.contains(Api.SIGEYI_TYPE2)
+                    || name.contains(Api.SIGEYI_TYPE3)
+                    || name.contains(Api.SIGEYI_TYPE4)) {
                 list.add(name);
                 String model = name.substring(7);
                 return device;
             }
         }
+        //startScan(ctx);
         return null;
     }
 
