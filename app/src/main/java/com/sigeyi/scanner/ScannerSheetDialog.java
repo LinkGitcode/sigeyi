@@ -147,6 +147,7 @@ public class ScannerSheetDialog extends BottomSheetDialogFragment {
 
 		dialog.setContentView(dialogView);
 		mBehavior = BottomSheetBehavior.from((View) dialogView.getParent());
+        mBehavior.setState(BottomSheetBehavior.STATE_DRAGGING);
 
 		listview.setOnItemClickListener((parent, view, position, id) -> {
 			stopScan();
@@ -172,12 +173,6 @@ public class ScannerSheetDialog extends BottomSheetDialogFragment {
 		if (savedInstanceState == null)
 			startScan();
 		return dialog;
-	}
-
-	@Override
-	public void onStart() {
-		super.onStart();
-		mBehavior.setState(BottomSheetBehavior.STATE_DRAGGING);
 	}
 
 	@Override
