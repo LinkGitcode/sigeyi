@@ -75,7 +75,7 @@ import com.sigeyi.mvp.contract.Contract;
 import com.sigeyi.mvp.model.FirmwareUpdateModel;
 import com.sigeyi.mvp.model.entity.FirmwareBean;
 import com.sigeyi.mvp.presenter.FirmwareUpdatePresenter;
-import com.sigeyi.scanner.ScannerFragment;
+import com.sigeyi.scanner.ScannerSheetDialog;
 import com.sigeyi.utility.FileHelper;
 import com.sigeyi.utils.ScannerUtils;
 import com.umeng.analytics.MobclickAgent;
@@ -97,7 +97,7 @@ import no.nordicsemi.android.dfu.DfuServiceListenerHelper;
  * DeviceScannerFragment.OnDeviceSelectedListener callback to receive callback when device is selected from scanning dialog The activity supports portrait and
  * landscape orientations
  */
-public class DfuActivity extends BaseActivity implements LoaderCallbacks<Cursor>, ScannerFragment.OnDeviceSelectedListener,
+public class DfuActivity extends BaseActivity implements LoaderCallbacks<Cursor>, ScannerSheetDialog.OnDeviceSelectedListener,
         UploadCancelFragment.CancelFragmentListener, PermissionRationaleFragment.PermissionDialogListener,Contract.FirmwareUpdateView {
     private static final String TAG = "DfuActivity";
 
@@ -407,10 +407,13 @@ public class DfuActivity extends BaseActivity implements LoaderCallbacks<Cursor>
         startActivityForResult(enableIntent, ENABLE_BT_REQ);
     }
 
-    // TODO: 2018/7/4  这里可以做成bottomSheetDialog
+    // TODO: 2018/7/4  这里可以做成bottomSheetDialog.已经搞好了
     private void showDeviceScanningDialog() {
-        final ScannerFragment dialog = ScannerFragment.getInstance(null); // Device that is advertising directly does not have the GENERAL_DISCOVERABLE nor LIMITED_DISCOVERABLE flag set.
-        dialog.show(getSupportFragmentManager(), "scan_fragment");
+//        final ScannerFragment dialog = ScannerFragment.getInstance(null); // Device that is advertising directly does not have the GENERAL_DISCOVERABLE nor LIMITED_DISCOVERABLE flag set.
+//        dialog.show(getSupportFragmentManager(), "scan_fragment");
+
+        final ScannerSheetDialog dialog = ScannerSheetDialog.getInstance(null); // Device that is advertising directly does not have the GENERAL_DISCOVERABLE nor LIMITED_DISCOVERABLE flag set.
+        dialog.show(getSupportFragmentManager(), "scan_sheet_fragment");
     }
 
     @Override
